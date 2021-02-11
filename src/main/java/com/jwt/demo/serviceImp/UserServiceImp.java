@@ -3,6 +3,7 @@ package com.jwt.demo.serviceImp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -20,11 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserServiceImp implements UserService {
 	
-	@Autowired
-	private UserRepository userRepository;
+	@Autowired private UserRepository userRepository;
 	
-	@Autowired
-	private RoleRepository roleRepository;
+	@Autowired private RoleRepository roleRepository;
+	
+	@Autowired private PasswordEncoder passwordEncoder;
 	
 	public ResponseApi saveUser(UserRequest userRequest) {
 		User userFound = userRepository.findUserByUserName(userRequest.getUserName());
@@ -44,7 +45,7 @@ public class UserServiceImp implements UserService {
 			userToSave.setUserName(userRequest.getUserName());
 			userToSave.setEmail(userRequest.getEmail());
 			userToSave.setRole(roleEntity);
-			userToSave.setPassword(userRequest.getPassword());
+			userToSave.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 			userRepository.save(userToSave);
 			log.info("user saved successfully");
 			return new ResponseApi(true, "user saved successfully");

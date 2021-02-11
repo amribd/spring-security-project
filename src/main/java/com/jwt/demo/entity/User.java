@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String userName;
+	@JsonIgnore
 	private String password;
 	private int age;
 	private String email;
