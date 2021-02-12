@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jwt.demo.dao.UserRepository;
 import com.jwt.demo.entity.User;
 import com.jwt.demo.request.LoginRequest;
+import com.jwt.demo.response.ResponseApi;
 import com.jwt.demo.security.JwtProvider;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +26,14 @@ public class AuthController {
 	
 	@Autowired private PasswordEncoder passwordEncoder;
 	
-	@PostMapping(value = "/login")
+	@PostMapping(value = "/auth")
 	public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
 		try {
 			User user = userRepository.findUserByUserName(loginRequest.getUsername());
 			if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
 				String token = jwtProvider.generateToken(user.getUserName());
-				return new ResponseEntity<Object>(token, HttpStatus.OK);
-			} return new ResponseEntity<Object>("this credentials doesn't exists", HttpStatus.OK);
+				return new ResponseEntity<Object>(new ResponseApi(true, token), HttpStatus.OK);
+			} return new ResponseEntity<Object>(new ResponseApi(false, "this credentials doesn't exists"), HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("internal server");
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
