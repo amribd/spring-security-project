@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.example.demo.constants.ConstantAuthentication;
+import com.jwt.demo.constants.ConstantAuthentication;
 
 @Component
 public class JwtFilter extends GenericFilterBean{

@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.constants.ConstantAuthentication;
+import com.jwt.demo.constants.ConstantAuthentication;
 import com.jwt.demo.dao.UserRepository;
 import com.jwt.demo.entity.User;
 import com.jwt.demo.request.LoginRequest;

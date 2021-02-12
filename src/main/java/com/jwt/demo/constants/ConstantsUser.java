@@ -1,4 +1,4 @@
-package com.example.demo.constants;
+package com.jwt.demo.constants;
 
 public final class ConstantsUser {
 
