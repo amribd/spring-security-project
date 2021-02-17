@@ -25,6 +25,7 @@ public class FileEntity {
 	private Long id;
 	private String fileName;
 	private String extension;
+	private String downloadUrl;
 	
 	@ManyToOne
 	@JsonIgnoreProperties("files")

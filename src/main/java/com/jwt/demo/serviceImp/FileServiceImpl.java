@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jwt.demo.dao.FileRepository;
 import com.jwt.demo.dao.UserRepository;
@@ -63,7 +64,15 @@ public class FileServiceImpl {
 		fileEntity.setFileName(FilenameUtils.removeExtension(file.getOriginalFilename()));
 		fileEntity.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
 		fileEntity.setUser(authenticatedUser());
+		fileEntity.setDownloadUrl(downloadUrl(file.getOriginalFilename()));
 		fileRepository.save(fileEntity);
+	}
+	
+	private String downloadUrl(String fileName) {
+		return ServletUriComponentsBuilder.fromCurrentContextPath()
+		.path("/file/download/")
+		.path(fileName)
+		.toUriString();	
 	}
 	
 	public List<FileEntity> getFilesByUser() {
